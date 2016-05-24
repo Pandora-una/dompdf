@@ -135,7 +135,14 @@ class CPDF implements Canvas
      * @var int
      */
     private $_page_number;
-
+    
+    /**
+     * First page number
+     *
+     * @var int
+     */
+    private $_first_page_number;
+    
     /**
      * Total number of pages
      *
@@ -401,7 +408,14 @@ class CPDF implements Canvas
     {
         $this->_page_number = $num;
     }
-
+    
+    /**
+     * Sets the first page number
+     *
+     * @param int $num
+     */
+    function set_first_page_number($num) { $this->_first_page_number = $num; }
+    
     /**
      * Sets the page count
      *
@@ -894,7 +908,7 @@ class CPDF implements Canvas
                 switch ($_t) {
                     case "text":
                         $text = str_replace(array("{PAGE_NUM}", "{PAGE_COUNT}"),
-                            array($page_number, $this->_page_count), $text);
+                            array($page_number + $this->_page_number, $this->_page_count), $text);
                         $this->text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
                         break;
 
@@ -902,7 +916,7 @@ class CPDF implements Canvas
                         if (!$eval) {
                             $eval = new PhpEvaluator($this);
                         }
-                        $eval->evaluate($code, array('PAGE_NUM' => $page_number, 'PAGE_COUNT' => $this->_page_count));
+                        $eval->evaluate($code, array('PAGE_NUM' => $page_number + $this->_page_number, 'PAGE_COUNT' => $this->_page_count));
                         break;
                 }
             }
