@@ -908,7 +908,7 @@ class CPDF implements Canvas
                 switch ($_t) {
                     case "text":
                         $text = str_replace(array("{PAGE_NUM}", "{PAGE_COUNT}"),
-                            array($page_number + $this->_page_number, $this->_page_count), $text);
+                            array($page_number + $this->_first_page_number, $this->_page_count), $text);
                         $this->text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
                         break;
 
@@ -916,7 +916,7 @@ class CPDF implements Canvas
                         if (!$eval) {
                             $eval = new PhpEvaluator($this);
                         }
-                        $eval->evaluate($code, array('PAGE_NUM' => $page_number + $this->_page_number, 'PAGE_COUNT' => $this->_page_count));
+                        $eval->evaluate($code, array('PAGE_NUM' => $page_number + $this->_first_page_number, 'PAGE_COUNT' => $this->_page_count));
                         break;
                 }
             }
